@@ -55,7 +55,7 @@
           required
           #cep="ngModel"
           [class.is-invalid]="!cep.valid && cep.touched"
-          (blur)="consultaCEP($event.target.value)"
+          (blur)="consultaCEP($event.target.value, f)"
         />
         <div class="alert alert-danger" *ngIf="!cep.valid && cep.touched">
           CEP é obrigatório!
@@ -102,7 +102,7 @@
           class="form-control"
           id="rua"
           name="rua"
-          [(ngModel)]="usuario.rua"
+          ngModel
           required
           #rua="ngModel"
           [class.is-invalid]="!rua.valid && rua.touched"
