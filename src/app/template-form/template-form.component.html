@@ -1,9 +1,5 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-  <div
-    class="form-group row"
-    [class.has-error]="!nome.valid && nome.touched"
-    [class.has-feedback]="!nome.valid && nome.touched"
-  >
+  <div class="form-group row" [ngClass]="aplicaCssErro(nome)">
     <div class="col-sm-12">
       <label for="nome">Nome</label>
     </div>
@@ -25,11 +21,7 @@
     </div>
   </div>
 
-  <div
-    class="form-group row"
-    [class.has-error]="!email.valid && email.touched"
-    [class.has-feedback]="!email.valid && email.touched"
-  >
+  <div class="form-group row" [ngClass]="aplicaCssErro(email)">
     <div class="col-sm-12">
       <label for="email">Email</label>
       <input
@@ -51,11 +43,7 @@
   </div>
 
   <div class="form-group row">
-    <div
-      class="col-md-3"
-      [class.has-error]="!cep.valid && cep.touched"
-      [class.has-feedback]="!cep.valid && cep.touched"
-    >
+    <div class="col-md-3" [ngClass]="aplicaCssErro(cep)">
       <label for="cep" class="control-label">CEP</label>
       <input
         type="text"
@@ -72,11 +60,7 @@
       </div>
     </div>
 
-    <div
-      class="col-md-3"
-      [class.has-error]="!numero.valid && numero.touched"
-      [class.has-feedback]="!numero.valid && numero.touched"
-    >
+    <div class="col-md-3" [ngClass]="aplicaCssErro(numero)">
       <label for="numero" class="control-label">Número</label>
       <input
         type="text"
@@ -106,11 +90,7 @@
     </div>
   </div>
 
-  <div
-    class="form-group row"
-    [class.has-error]="!rua.valid && rua.touched"
-    [class.has-feedback]="!rua.valid && rua.touched"
-  >
+  <div class="form-group row" [ngClass]="aplicaCssErro(rua)">
     <div class="col-sm-12">
       <label for="rua">Rua</label>
     </div>
@@ -132,11 +112,7 @@
   </div>
 
   <div class="form-group row">
-    <div
-      class="col-md-5"
-      [class.has-error]="!bairro.valid && bairro.touched"
-      [class.has-feedback]="!bairro.valid && bairro.touched"
-    >
+    <div class="col-md-5" [ngClass]="aplicaCssErro(bairro)">
       <label for="bairro" class="control-label">Bairro</label>
       <input
         type="text"
@@ -153,11 +129,7 @@
       </div>
     </div>
 
-    <div
-      class="col-md-4"
-      [class.has-error]="!cidade.valid && cidade.touched"
-      [class.has-feedback]="!cidade.valid && cidade.touched"
-    >
+    <div class="col-md-4" [ngClass]="aplicaCssErro(cidade)">
       <label for="cidade" class="control-label">Cidade</label>
       <input
         type="text"
@@ -174,11 +146,7 @@
       </div>
     </div>
 
-    <div
-      class="col-md-3"
-      [class.has-error]="!estado.valid && estado.touched"
-      [class.has-feedback]="!estado.valid && estado.touched"
-    >
+    <div class="col-md-3" [ngClass]="aplicaCssErro(estado)">
       <label for="estado" class="control-label">Estado</label>
       <input
         type="text"
