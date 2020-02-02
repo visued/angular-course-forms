@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-template-form',
@@ -12,7 +13,7 @@ export class TemplateFormComponent implements OnInit {
     email: null
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -31,6 +32,26 @@ export class TemplateFormComponent implements OnInit {
       'has-error': this.verificaValidTouched(campo),
       'has-feedback': this.verificaValidTouched(campo),
     }
+  }
+
+  consultaCEP(cep){
+    // Nova variável CEP somento com digitos númericos.
+    cep = cep.replace(/\D/g, '');
+    if(cep != '') {
+      // Expressão regular para validar CEP.
+      const validacep = /^[0-9]{8}$/
+
+      // Valida o formato do CEP.
+      if(validacep.test(cep)) {
+        this.http.get(`//viacep.com.br/ws/${cep}/json`)
+          .subscribe((dados) => {
+            console.log(dados);
+          });
+
+      }
+
+    }
+
   }
 
 }

@@ -55,6 +55,7 @@
           required
           #cep="ngModel"
           [class.is-invalid]="!cep.valid && cep.touched"
+          (blur)="consultaCEP($event.target.value)"
         />
         <div class="alert alert-danger" *ngIf="!cep.valid && cep.touched">
           CEP é obrigatório!
