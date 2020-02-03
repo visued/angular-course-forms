@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TemplateFormModule } from './template-form/template-form.module';
 import { DataFormModule } from './data-form/data-form.module';
+import { ShareModule } from './share/share.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DataFormModule } from './data-form/data-form.module';
     FormsModule,
     TemplateFormModule,
     DataFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ShareModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,9 +17,9 @@ export class DataFormComponent implements OnInit {
     //   nome: new FormControl(null),
     //   email: new FormControl(null),
     // });
-    this.formBuilder = this.formBuilder.group({
+    this.formulario = this.formBuilder.group({
       nome: [null],
-      email: [null],
+      email: [null]
     });
   }
 
