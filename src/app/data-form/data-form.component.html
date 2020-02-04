@@ -7,10 +7,14 @@
       <input
         type="text"
         class="form-control"
+        formControlName="nome"
         id="nome"
         placeholder="Nome"
-        formControlName="nome"
+        [ngClass]="aplicaCssErro('nome')"
       />
+      <div class="alert alert-danger" *ngIf="verificaValidTouched('nome')">
+        Nome é obrigatório!
+      </div>
     </div>
   </div>
 
@@ -20,10 +24,17 @@
       <input
         type="email"
         class="form-control"
+        formControlName="email"
         id="email"
         placeholder="email@email.com"
-        formControlName="email"
-      />
+        [ngClass]="aplicaCssErro('email')"
+      />      
+      <div class="alert alert-danger" *ngIf="verificaValidTouched('email')">
+        E-mail é obrigatório!
+      </div>
+      <div class="alert alert-danger" *ngIf="verificaEmailValido()">
+        E-mail é inválido!
+      </div>
     </div>
   </div>
 

@@ -21,16 +21,16 @@ export class DataFormComponent implements OnInit {
     //   email: new FormControl(null),
     // });
     this.formulario = this.formBuilder.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]]
     });
   }
 
   onSubmit() {
-    this.http.post('//oooohttpbin.org/post', JSON.stringify(this.formulario.value))
+    this.http.post('//httpbin.org/post', JSON.stringify(this.formulario.value))
     .subscribe((res) => {
       console.log(res);
-      this.formulario.reset();
+      //this.formulario.reset();
     }, (error: any) => {
       console.log('Error: '+ error);
     });
@@ -40,4 +40,20 @@ export class DataFormComponent implements OnInit {
     this.formulario.reset();
   }
 
+  verificaValidTouched(campo: string) {
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+
+  aplicaCssErro(campo: string) {
+    return {
+      'is-invalid': this.verificaValidTouched(campo)                                                                                                                                                                                                                                                                                                                                                                                                  
+    }
+  }
+
+  verificaEmailValido() {
+    let campoEmail = this.formulario.get('email')
+    if (campoEmail.errors){
+      return campoEmail.errors['email'];
+    }
+  }
 }
