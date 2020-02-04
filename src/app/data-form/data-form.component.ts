@@ -1,11 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 
 import { DropdownService } from "../share/service/dropdown.service";
 import { IEstadosBr } from "../share/models/iestados-br.model";
-import { ConsultaCepService } from '../share/service/consulta-cep.service';
-import { Observable } from 'rxjs/internal/Observable';
+import { ConsultaCepService } from "../share/service/consulta-cep.service";
+import { Observable } from "rxjs/internal/Observable";
 
 @Component({
   selector: "app-data-form",
@@ -19,6 +24,7 @@ export class DataFormComponent implements OnInit {
   cargos: any[];
   tecnologias: any[];
   newsletters: any[];
+  frameworks = ["Angular", "React", "Vue", "Ionic"];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,16 +56,36 @@ export class DataFormComponent implements OnInit {
         rua: [null, Validators.required],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: [null, Validators.required],
+        estado: [null, Validators.required]
       }),
       cargo: [null],
       tecnologias: [null],
-      newsletter: ['s'],
-      termos: [null, Validators.pattern('true')]
+      newsletter: ["s"],
+      termos: [null, Validators.pattern("true")],
+      frameworks: this.buildFrameworks()
     });
   }
 
+  buildFrameworks() {
+    const values = this.frameworks.map(v => new FormControl(false));
+    return this.formBuilder.array(values);
+    // return [
+    //   new FormControl(false),
+    //   new FormControl(false),
+    //   new FormControl(false),
+    //   new FormControl(false),
+    // ]
+  }
+
   onSubmit() {
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((v, i) => (v ? this.frameworks[i] : null))
+        .filter(v => v !== null)
+    });
+
     if (this.formulario.valid) {
       this.http
         .post("//httpbin.org/post", JSON.stringify(this.formulario.value))
@@ -114,9 +140,8 @@ export class DataFormComponent implements OnInit {
   consultaCEP() {
     let cep = this.formulario.get("endereco.cep").value;
 
-    if (cep != null && cep !== '') {
-      this.consultaCepService.consultaCEP(cep)
-      .subscribe(dados => {
+    if (cep != null && cep !== "") {
+      this.consultaCepService.consultaCEP(cep).subscribe(dados => {
         this.populaDadosForm(dados);
       });
     }
@@ -163,15 +188,17 @@ export class DataFormComponent implements OnInit {
   }
 
   setarCargo() {
-    const cargo = {nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl'};
-    this.formulario.get('cargo').setValue(cargo);
+    const cargo = { nome: "Dev", nivel: "Pleno", desc: "Dev Pl" };
+    this.formulario.get("cargo").setValue(cargo);
   }
 
   compararCargos(obj1, obj2) {
-    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+    return obj1 && obj2
+      ? obj1.nome === obj2.nome && obj1.nivel === obj2.nivel
+      : obj1 === obj2;
   }
 
-  setarTecnologia(){
-    this.formulario.get('tecnologias').setValue(['python', 'csharp', 'java']);
+  setarTecnologia() {
+    this.formulario.get("tecnologias").setValue(["python", "csharp", "java"]);
   }
 }

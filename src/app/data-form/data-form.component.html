@@ -203,7 +203,12 @@
       <div id="newsletter" class="row">
         <div class="col-sm-4" *ngFor="let item of newsletters">
           <label class="radio-inline">
-            <input type="radio" [value]="item.nome" formControlName="newsletter" /> {{ item.desc }}
+            <input
+              type="radio"
+              [value]="item.nome"
+              formControlName="newsletter"
+            />
+            {{ item.desc }}
           </label>
         </div>
       </div>
@@ -214,15 +219,22 @@
     <div class="col-md-3" [ngClass]="aplicaCssErro('termos')">
       <div class="checkbox">
         <label class="checkbox-inline">
-          <input type="checkbox" formControlName="termos"> Aceito os termos
+          <input type="checkbox" formControlName="termos" /> Aceito os termos
         </label>
       </div>
-      <div
-      class="alert alert-danger"
-      *ngIf="verificaValidTouched('termos')"
-    >
-      Por favor, aceite os termos.
+      <div class="alert alert-danger" *ngIf="verificaValidTouched('termos')">
+        Por favor, aceite os termos.
+      </div>
     </div>
+
+    <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
+      <div id="frameworks" class="row">
+        <div class="checkbox" class="col-sm-4" formArrayName="frameworks" *ngFor="let item of formulario.get('frameworks').controls; let i = index">
+          <label class="checkbox-inline">
+            <input type="checkbox" [formControlName]="i"/> {{ frameworks[i] }}
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 
