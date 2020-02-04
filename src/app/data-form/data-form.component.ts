@@ -1,11 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators
-} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
+import { DropdownService } from "../share/service/dropdown.service";
+import { IEstadosBr } from "../share/models/iestados-br.model";
 
 @Component({
   selector: "app-data-form",
@@ -14,10 +11,18 @@ import { HttpClient } from "@angular/common/http";
 })
 export class DataFormComponent implements OnInit {
   formulario: FormGroup;
+  estados: IEstadosBr;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private dropDownService: DropdownService
+  ) {}
 
   ngOnInit() {
+    this.dropDownService.getEstadosBr().subscribe((dados) => {
+      console.log(dados);
+    })
     // this.formulario = new FormGroup({
     //   nome: new FormControl(null),
     //   email: new FormControl(null),
@@ -38,18 +43,18 @@ export class DataFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.formulario.valid){
+    if (this.formulario.valid) {
       this.http
-      .post("//httpbin.org/post", JSON.stringify(this.formulario.value))
-      .subscribe(
-        res => {
-          console.log(res);
-          //this.formulario.reset();
-        },
-        (error: any) => {
-          console.log("Error: " + error);
-        }
-      );
+        .post("//httpbin.org/post", JSON.stringify(this.formulario.value))
+        .subscribe(
+          res => {
+            console.log(res);
+            //this.formulario.reset();
+          },
+          (error: any) => {
+            console.log("Error: " + error);
+          }
+        );
     } else {
       this.verificaValidacoesForm(this.formulario);
     }
@@ -59,11 +64,10 @@ export class DataFormComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(campo => {
       const controle = formGroup.get(campo);
       controle.markAsDirty();
-      if(controle instanceof FormGroup) {
+      if (controle instanceof FormGroup) {
         this.verificaValidacoesForm(controle);
-
       }
-    })
+    });
   }
 
   resetar() {
@@ -72,7 +76,8 @@ export class DataFormComponent implements OnInit {
 
   verificaValidTouched(campo: string) {
     return (
-      !this.formulario.get(campo).valid && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
+      !this.formulario.get(campo).valid &&
+      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
     );
   }
 
