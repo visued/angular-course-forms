@@ -27,4 +27,12 @@ export class DropdownService {
       {nome: 'csharp', desc: 'C#'},
     ]
   }
+
+  getNewsLetter() {
+    return [
+      {nome: 's', desc: 'Sim'},
+      {nome: 'n', desc: 'Não'}
+
+    ]
+  }
 }

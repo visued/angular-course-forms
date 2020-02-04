@@ -190,20 +190,32 @@
         formControlName="tecnologias"
         multiple
       >
-        <option          
+        <option
           *ngFor="let tecnologia of tecnologias"
           [value]="tecnologia.nome"
           >{{ tecnologia.desc }}</option
         >
       </select>
     </div>
+
+    <div class="col-md-4">
+      <label for="newsletter" class="control-label">Newsletter</label>
+      <div id="newsletter" class="row">
+        <div class="col-sm-4" *ngFor="let item of newsletters">
+          <label class="radio-inline">
+            <input type="radio" [value]="item.nome" formControlName="newsletter" /> {{ item.desc }}
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary">Enviar</button>
   <button class="btn btn-default" (click)="resetar()">Cancelar</button>
   <button class="btn btn-info" (click)="setarCargo()">Setar Cargo</button>
-  <button class="btn btn-info" (click)="setarTecnologia()">Setar Tecnologia</button>
-
+  <button class="btn btn-info" (click)="setarTecnologia()">
+    Setar Tecnologia
+  </button>
 
   <app-form-debug [form]="formulario"></app-form-debug>
 </form>
