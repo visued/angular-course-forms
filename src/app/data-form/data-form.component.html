@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div>
+  <div formGroupName="endereco">
     <div class="form-group row">
       <div class="col-md-3">
         <label for="cep" class="control-label">CEP</label>
@@ -47,9 +47,9 @@
           class="form-control"
           id="cep"
           formControlName="cep"
-          [ngClass]="aplicaCssErro('cep')"
+          [ngClass]="aplicaCssErro('endereco.cep')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('cep')">
+        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.cep')">
           CEP é obrigatório!
         </div>
       </div>
@@ -61,9 +61,9 @@
           class="form-control"
           id="numero"
           formControlName="numero"
-          [ngClass]="aplicaCssErro('numero')"
+          [ngClass]="aplicaCssErro('endereco.numero')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('numero')">
+        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.numero')">
           Número é obrigatório!
         </div>
       </div>
@@ -89,10 +89,10 @@
           class="form-control"
           id="rua"
           formControlName="rua"
-          [ngClass]="aplicaCssErro('rua')"
+          [ngClass]="aplicaCssErro('endereco.rua')"
         />
       </div>
-      <div class="alert alert-danger" *ngIf="verificaValidTouched('rua')">
+      <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.rua')">
         Rua é obrigatório!
       </div>
     </div>
@@ -105,9 +105,9 @@
           class="form-control"
           id="bairro"
           formControlName="bairro"
-          [ngClass]="aplicaCssErro('bairro')"
+          [ngClass]="aplicaCssErro('endereco.bairro')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('bairro')">
+        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.bairro')">
           Bairro é obrigatório!
         </div>
       </div>
@@ -119,9 +119,9 @@
           class="form-control"
           id="cidade"
           formControlName="cidade"
-          [ngClass]="aplicaCssErro('cidade')"
+          [ngClass]="aplicaCssErro('endereco.cidade')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('bairro')">
+        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.cidade')">
           Cidade é obrigatório!
         </div>
       </div>
@@ -133,9 +133,9 @@
           class="form-control"
           id="estado"
           formControlName="estado"
-          [ngClass]="aplicaCssErro('estado')"
+          [ngClass]="aplicaCssErro('endereco.estado')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('estado')">
+        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.estado')">
           Estado é obrigatório!
         </div>
       </div>
