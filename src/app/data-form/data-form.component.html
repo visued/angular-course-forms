@@ -28,7 +28,7 @@
         id="email"
         placeholder="email@email.com"
         [ngClass]="aplicaCssErro('email')"
-      />      
+      />
       <div class="alert alert-danger" *ngIf="verificaValidTouched('email')">
         E-mail é obrigatório!
       </div>
@@ -48,8 +48,12 @@
           id="cep"
           formControlName="cep"
           [ngClass]="aplicaCssErro('endereco.cep')"
+          (blur)="consultaCEP()"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.cep')">
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.cep')"
+        >
           CEP é obrigatório!
         </div>
       </div>
@@ -63,7 +67,10 @@
           formControlName="numero"
           [ngClass]="aplicaCssErro('endereco.numero')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.numero')">
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.numero')"
+        >
           Número é obrigatório!
         </div>
       </div>
@@ -92,7 +99,10 @@
           [ngClass]="aplicaCssErro('endereco.rua')"
         />
       </div>
-      <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.rua')">
+      <div
+        class="alert alert-danger"
+        *ngIf="verificaValidTouched('endereco.rua')"
+      >
         Rua é obrigatório!
       </div>
     </div>
@@ -107,7 +117,10 @@
           formControlName="bairro"
           [ngClass]="aplicaCssErro('endereco.bairro')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.bairro')">
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.bairro')"
+        >
           Bairro é obrigatório!
         </div>
       </div>
@@ -121,7 +134,10 @@
           formControlName="cidade"
           [ngClass]="aplicaCssErro('endereco.cidade')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.cidade')">
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.cidade')"
+        >
           Cidade é obrigatório!
         </div>
       </div>
@@ -135,7 +151,10 @@
           formControlName="estado"
           [ngClass]="aplicaCssErro('endereco.estado')"
         />
-        <div class="alert alert-danger" *ngIf="verificaValidTouched('endereco.estado')">
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.estado')"
+        >
           Estado é obrigatório!
         </div>
       </div>
