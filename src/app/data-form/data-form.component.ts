@@ -52,7 +52,7 @@ export class DataFormComponent implements OnInit {
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       endereco: this.formBuilder.group({
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidation.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         rua: [null, Validators.required],
@@ -76,7 +76,7 @@ export class DataFormComponent implements OnInit {
     //   new FormControl(false),
     //   new FormControl(false),
     //   new FormControl(false),
-    // ]
+    // ]Formulários reativos: Validação Customizada (FormArray Checkboxes)
   }
 
 

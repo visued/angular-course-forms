@@ -56,6 +56,13 @@
         >
           CEP é obrigatório!
         </div>
+
+        <div
+        class="alert alert-danger"
+        *ngIf="this.formulario.get('endereco.cep').hasError('cepInvalido')"
+      >
+        CEP é inválido!
+      </div>
       </div>
 
       <div class="col-md-3">
