@@ -38,6 +38,29 @@
     </div>
   </div>
 
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <label for="confirmarEmail">Confirmar e-mail.</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="confirmarEmail"
+        id="confirmarEmail"
+        placeholder="email@email.com"
+        [ngClass]="aplicaCssErro('confirmarEmail')"
+      />
+      <div class="alert alert-danger" *ngIf="verificaEmailValido()">
+        E-mail é inválido!
+      </div>
+      <div
+        class="alert alert-danger"
+        *ngIf="this.formulario.get('confirmarEmail').hasError('equalsTo')"
+      >
+        Os emails não são iguais, verifique!
+      </div>
+    </div>
+  </div>
+
   <div formGroupName="endereco">
     <div class="form-group row">
       <div class="col-md-3">
@@ -58,11 +81,11 @@
         </div>
 
         <div
-        class="alert alert-danger"
-        *ngIf="this.formulario.get('endereco.cep').hasError('cepInvalido')"
-      >
-        CEP é inválido!
-      </div>
+          class="alert alert-danger"
+          *ngIf="this.formulario.get('endereco.cep').hasError('cepInvalido')"
+        >
+          CEP é inválido!
+        </div>
       </div>
 
       <div class="col-md-3">
@@ -236,12 +259,23 @@
 
     <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
       <div id="frameworks" class="row">
-        <div class="checkbox" class="col-sm-4" formArrayName="frameworks" *ngFor="let item of formulario.get('frameworks').controls; let i = index">
+        <div
+          class="checkbox"
+          class="col-sm-4"
+          formArrayName="frameworks"
+          *ngFor="
+            let item of formulario.get('frameworks').controls;
+            let i = index
+          "
+        >
           <label class="checkbox-inline">
-            <input type="checkbox" [formControlName]="i"/> {{ frameworks[i] }}
+            <input type="checkbox" [formControlName]="i" /> {{ frameworks[i] }}
           </label>
         </div>
-        <div class="alert alert-danger" *ngIf="!formulario.get('frameworks').valid">
+        <div
+          class="alert alert-danger"
+          *ngIf="!formulario.get('frameworks').valid"
+        >
           Selecione ao menos 1 opção.
         </div>
       </div>

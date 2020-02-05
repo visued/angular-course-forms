@@ -40,6 +40,7 @@ export class DataFormComponent implements OnInit {
     this.cargos = this.dropDownService.getCargos();
     this.tecnologias = this.dropDownService.getTecnologias();
     this.newsletters = this.dropDownService.getNewsLetter();
+
     // this.dropDownService.getEstadosBr().subscribe((dados) => {
     //   console.log(dados);
     //   this.estados = dados;
@@ -48,9 +49,11 @@ export class DataFormComponent implements OnInit {
     //   nome: new FormControl(null),
     //   email: new FormControl(null),
     // });
+
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
+      confirmarEmail: [null, [FormValidation.equalsTo('email')]],
       endereco: this.formBuilder.group({
         cep: [null, [Validators.required, FormValidation.cepValidator]],
         numero: [null, Validators.required],
