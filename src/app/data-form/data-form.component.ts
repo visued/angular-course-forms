@@ -3,7 +3,8 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControl
+  FormControl,
+  FormArray
 } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 
@@ -11,6 +12,7 @@ import { DropdownService } from "../share/service/dropdown.service";
 import { IEstadosBr } from "../share/models/iestados-br.model";
 import { ConsultaCepService } from "../share/service/consulta-cep.service";
 import { Observable } from "rxjs/internal/Observable";
+import { FormValidation } from '../share/form-validation';
 
 @Component({
   selector: "app-data-form",
@@ -68,7 +70,7 @@ export class DataFormComponent implements OnInit {
 
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
-    return this.formBuilder.array(values);
+    return this.formBuilder.array(values, FormValidation.requiredMinCheckBox(1));
     // return [
     //   new FormControl(false),
     //   new FormControl(false),
@@ -76,6 +78,8 @@ export class DataFormComponent implements OnInit {
     //   new FormControl(false),
     // ]
   }
+
+
 
   onSubmit() {
     let valueSubmit = Object.assign({}, this.formulario.value);

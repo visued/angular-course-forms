@@ -234,6 +234,9 @@
             <input type="checkbox" [formControlName]="i"/> {{ frameworks[i] }}
           </label>
         </div>
+        <div class="alert alert-danger" *ngIf="!formulario.get('frameworks').valid">
+          Selecione ao menos 1 opção.
+        </div>
       </div>
     </div>
   </div>
