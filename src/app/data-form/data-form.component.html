@@ -12,9 +12,8 @@
         placeholder="Nome"
         [ngClass]="aplicaCssErro('nome')"
       />
-      <div class="alert alert-danger" *ngIf="verificaValidTouched('nome')">
-        Nome é obrigatório!
-      </div>
+      <app-error-msg [control]="formulario.get('nome')" label="Nome">
+      </app-error-msg>
     </div>
   </div>
 

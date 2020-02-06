@@ -4,18 +4,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormDebugComponent } from './form-debug/form-debug.component';
 import { DropdownService } from './service/dropdown.service';
+import { ErrorMsgComponent } from './error-msg/error-msg.component';
+import { CampoErroComponent } from './campo-erro/campo-erro.component';
 
 
 
 @NgModule({
   declarations: [
-    FormDebugComponent
+    FormDebugComponent,
+    ErrorMsgComponent,
+    CampoErroComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule
   ],
-  exports: [ FormDebugComponent ],
+  exports: [ FormDebugComponent, ErrorMsgComponent, CampoErroComponent ],
   providers: [ DropdownService ]
 })
 export class ShareModule { }
