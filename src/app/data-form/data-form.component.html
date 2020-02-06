@@ -1,5 +1,5 @@
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <div class="col-sm-12">
       <label for="nome">Nome</label>
     </div>
@@ -12,12 +12,24 @@
         placeholder="Nome"
         [ngClass]="aplicaCssErro('nome')"
       />
-      <app-error-msg [control]="formulario.get('nome')" label="Nome">
-      </app-error-msg>
+      <app-error-msg
+        [control]="formulario.get('nome')"
+        label="Nome"
+      ></app-error-msg>
     </div>
-  </div>
+  </div> -->
 
-  <div class="form-group row">
+  <app-input-field
+    class="col-sm-12"
+    formControlName="nome"
+    [classeCss]="aplicaCssErro('nome')"
+    id="nome"
+    label="Nome"
+    [control]="formulario.get('nome')"
+  >
+  </app-input-field>
+
+  <!-- <div class="form-group row">
     <div class="col-sm-12">
       <label for="email">Email</label>
       <input
@@ -28,34 +40,34 @@
         placeholder="email@email.com"
         [ngClass]="aplicaCssErro('email')"
       />
-      <div
-        class="alert alert-danger"
-        *ngIf="formulario.get('email').status === 'PENDING'"
+      <app-error-msg
+        [mostraErro]="formulario.get('email').status === 'PENDING'"
+        msgErro="Validando email..."
       >
-        Validando e-mail...
-      </div>
-      <div class="alert alert-danger" *ngIf="verificaValidTouched('email')">
-        E-mail é obrigatório!
-      </div>
-      <div class="alert alert-danger" *ngIf="verificaEmailValido()">
-        E-mail é inválido!
-      </div>
-
+      </app-error-msg>
+      <app-error-msg
+        [mostraErro]="verificaValidTouched('email')"
+        msgErro="E-mail é obrigatório!"
+      >
+      </app-error-msg>
+      <app-error-msg
+        [mostraErro]="verificaEmailValido()"
+        msgErro="E-mail é inválido!"
+      >
+      </app-error-msg>
+      <app-error-msg
+        [mostraErro]="formulario.get('email').hasError('emailInvalido')"
+        msgErro="E-mail já cadastrado!"
+      >
+      </app-error-msg>
       <div
         class="alert alert-success"
         *ngIf="formulario.get('email').status === 'VALID'"
       >
         E-mail valido!
       </div>
-
-      <div
-        class="alert alert-danger"
-        *ngIf="formulario.get('email').hasError('emailInvalido')"
-      >
-        E-mail já cadastrado!
-      </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="form-group row">
     <div class="col-sm-12">
