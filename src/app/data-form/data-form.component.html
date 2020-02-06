@@ -29,11 +29,31 @@
         placeholder="email@email.com"
         [ngClass]="aplicaCssErro('email')"
       />
+      <div
+        class="alert alert-danger"
+        *ngIf="formulario.get('email').status === 'PENDING'"
+      >
+        Validando e-mail...
+      </div>
       <div class="alert alert-danger" *ngIf="verificaValidTouched('email')">
         E-mail é obrigatório!
       </div>
       <div class="alert alert-danger" *ngIf="verificaEmailValido()">
         E-mail é inválido!
+      </div>
+
+      <div
+        class="alert alert-success"
+        *ngIf="formulario.get('email').status === 'VALID'"
+      >
+        E-mail valido!
+      </div>
+
+      <div
+        class="alert alert-danger"
+        *ngIf="formulario.get('email').hasError('emailInvalido')"
+      >
+        E-mail já cadastrado!
       </div>
     </div>
   </div>
@@ -54,7 +74,7 @@
       </div>
       <div
         class="alert alert-danger"
-        *ngIf="this.formulario.get('confirmarEmail').hasError('equalsTo')"
+        *ngIf="formulario.get('confirmarEmail').hasError('equalsTo')"
       >
         Os emails não são iguais, verifique!
       </div>

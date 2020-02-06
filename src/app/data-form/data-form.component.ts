@@ -7,12 +7,14 @@ import {
   FormArray
 } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
+import { map, tap } from 'rxjs/operators';
 
 import { DropdownService } from "../share/service/dropdown.service";
 import { IEstadosBr } from "../share/models/iestados-br.model";
 import { ConsultaCepService } from "../share/service/consulta-cep.service";
 import { Observable } from "rxjs/internal/Observable";
 import { FormValidation } from '../share/form-validation';
+import { VerificaEmailService } from '../share/service/verifica-email.service';
 
 @Component({
   selector: "app-data-form",
@@ -32,10 +34,12 @@ export class DataFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private dropDownService: DropdownService,
-    private consultaCepService: ConsultaCepService
+    private consultaCepService: ConsultaCepService,
+    private verificarEmailService: VerificaEmailService
   ) {}
 
   ngOnInit() {
+    this.verificarEmailService.verificarEmail('email@email.com.br').subscribe();
     this.estados = this.dropDownService.getEstadosBr();
     this.cargos = this.dropDownService.getCargos();
     this.tecnologias = this.dropDownService.getTecnologias();
@@ -52,7 +56,7 @@ export class DataFormComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email], [this.validarEmail.bind(this)]],
       confirmarEmail: [null, [FormValidation.equalsTo('email')]],
       endereco: this.formBuilder.group({
         cep: [null, [Validators.required, FormValidation.cepValidator]],
@@ -207,5 +211,12 @@ export class DataFormComponent implements OnInit {
 
   setarTecnologia() {
     this.formulario.get("tecnologias").setValue(["python", "csharp", "java"]);
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.verificarEmailService.verificarEmail(formControl.value)
+    .pipe(
+      map(emailExiste => emailExiste ? { emailInvalido: true} : null)
+    );
   }
 }
