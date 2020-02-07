@@ -16,15 +16,14 @@ import { Observable } from "rxjs/internal/Observable";
 import { FormValidation } from "../share/form-validation";
 import { VerificaEmailService } from "../share/service/verifica-email.service";
 import { empty } from "rxjs/internal/observable/empty";
+import { BaseFormComponent } from "../share/base-form/base-form.component";
 
 @Component({
   selector: "app-data-form",
   templateUrl: "./data-form.component.html",
   styleUrls: ["./data-form.component.css"]
 })
-export class DataFormComponent implements OnInit {
-  formulario: FormGroup;
-  //estados: IEstadosBr[];
+export class DataFormComponent extends BaseFormComponent implements OnInit {
   estados: Observable<IEstadosBr[]>;
   cargos: any[];
   tecnologias: any[];
@@ -37,7 +36,9 @@ export class DataFormComponent implements OnInit {
     private dropDownService: DropdownService,
     private consultaCepService: ConsultaCepService,
     private verificarEmailService: VerificaEmailService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.verificarEmailService.verificarEmail("email@email.com.br").subscribe();
@@ -45,16 +46,6 @@ export class DataFormComponent implements OnInit {
     this.cargos = this.dropDownService.getCargos();
     this.tecnologias = this.dropDownService.getTecnologias();
     this.newsletters = this.dropDownService.getNewsLetter();
-
-    // this.dropDownService.getEstadosBr().subscribe((dados) => {
-    //   console.log(dados);
-    //   this.estados = dados;
-    // })
-    // this.formulario = new FormGroup({
-    //   nome: new FormControl(null),
-    //   email: new FormControl(null),
-    // });
-
     this.formulario = this.formBuilder.group({
       nome: [
         null,
@@ -104,15 +95,9 @@ export class DataFormComponent implements OnInit {
       values,
       FormValidation.requiredMinCheckBox(1)
     );
-    // return [
-    //   new FormControl(false),
-    //   new FormControl(false),
-    //   new FormControl(false),
-    //   new FormControl(false),
-    // ]Formulários reativos: Validação Customizada (FormArray Checkboxes)
   }
 
-  onSubmit() {
+  submit() {
     let valueSubmit = Object.assign({}, this.formulario.value);
 
     valueSubmit = Object.assign(valueSubmit, {
@@ -120,56 +105,17 @@ export class DataFormComponent implements OnInit {
         .map((v, i) => (v ? this.frameworks[i] : null))
         .filter(v => v !== null)
     });
-
-    if (this.formulario.valid) {
-      this.http
-        .post("//httpbin.org/post", JSON.stringify(this.formulario.value))
-        .subscribe(
-          res => {
-            console.log(res);
-            //this.formulario.reset();
-          },
-          (error: any) => {
-            console.log("Error: " + error);
-          }
-        );
-    } else {
-      this.verificaValidacoesForm(this.formulario);
-    }
-  }
-
-  verificaValidacoesForm(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(campo => {
-      const controle = formGroup.get(campo);
-      controle.markAsDirty();
-      if (controle instanceof FormGroup) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
-  }
-
-  resetar() {
-    this.formulario.reset();
-  }
-
-  verificaValidTouched(campo: string) {
-    return (
-      !this.formulario.get(campo).valid &&
-      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
-    );
-  }
-
-  aplicaCssErro(campo: string) {
-    return {
-      "is-invalid": this.verificaValidTouched(campo)
-    };
-  }
-
-  verificaEmailValido() {
-    let campoEmail = this.formulario.get("email");
-    if (campoEmail.errors) {
-      return campoEmail.errors["email"];
-    }
+    this.http
+      .post("//httpbin.org/post", JSON.stringify(this.formulario.value))
+      .subscribe(
+        res => {
+          console.log(res);
+          //this.formulario.reset();
+        },
+        (error: any) => {
+          console.log("Error: " + error);
+        }
+      );
   }
 
   consultaCEP() {
@@ -183,20 +129,6 @@ export class DataFormComponent implements OnInit {
   }
 
   populaDadosForm(dados) {
-    // formulario.setValue({
-    //     nome: formulario.value.nome,
-    //     email: formulario.value.email,
-    //     endereco: {
-    //       cep: dados.cep,
-    //       numero: '',
-    //       complemento: dados.complemento,
-    //       rua: dados.logradouro,
-    //       bairro: dados.bairro,
-    //       cidade: dados.localidade,
-    //       estado: dados.uf
-    //     }
-    // });
-
     this.formulario.patchValue({
       endereco: {
         cep: dados.cep,
