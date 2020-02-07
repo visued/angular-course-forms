@@ -185,7 +185,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <!-- <div class="col-md-4">
         <label for="cidade" class="control-label">Cidade</label>
         <input
           type="text"
@@ -194,6 +194,29 @@
           formControlName="cidade"
           [ngClass]="aplicaCssErro('endereco.cidade')"
         />
+        <div
+          class="alert alert-danger"
+          *ngIf="verificaValidTouched('endereco.cidade')"
+        >
+          Cidade é obrigatório!
+        </div>
+      </div> -->
+
+      <div class="col-md-4">
+        <label for="cidade" class="control-label">Cidade</label>
+        <select
+          class="form-control"
+          id="estado"
+          formControlName="cidade"
+          [ngClass]="aplicaCssErro('endereco.cidade')"
+        >
+          <option
+            *ngFor="let cidade of cidades"
+            [value]="cidade.nome"
+            >{{ cidade.nome }}</option
+          >
+        </select>
+
         <div
           class="alert alert-danger"
           *ngIf="verificaValidTouched('endereco.cidade')"
@@ -211,7 +234,7 @@
           [ngClass]="aplicaCssErro('endereco.estado')"
         >
           <option
-            *ngFor="let estado of estados | async"
+            *ngFor="let estado of estados"
             [value]="estado.sigla"
             >{{ estado.nome }}</option
           >

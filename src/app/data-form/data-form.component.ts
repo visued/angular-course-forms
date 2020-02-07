@@ -17,6 +17,7 @@ import { FormValidation } from "../share/form-validation";
 import { VerificaEmailService } from "../share/service/verifica-email.service";
 import { empty } from "rxjs/internal/observable/empty";
 import { BaseFormComponent } from "../share/base-form/base-form.component";
+import { ICidadesBr } from '../share/models/icidades-br.models';
 
 @Component({
   selector: "app-data-form",
@@ -24,7 +25,9 @@ import { BaseFormComponent } from "../share/base-form/base-form.component";
   styleUrls: ["./data-form.component.css"]
 })
 export class DataFormComponent extends BaseFormComponent implements OnInit {
-  estados: Observable<IEstadosBr[]>;
+  //estados: Observable<IEstadosBr[]>;
+  estados: IEstadosBr[];
+  cidades: ICidadesBr;
   cargos: any[];
   tecnologias: any[];
   newsletters: any[];
@@ -42,7 +45,10 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   ngOnInit() {
     this.verificarEmailService.verificarEmail("email@email.com.br").subscribe();
-    this.estados = this.dropDownService.getEstadosBr();
+    //this.estados = this.dropDownService.getEstadosBr();
+    this.dropDownService.getEstadosBr()
+    .subscribe(dados => this.estados = dados);
+
     this.cargos = this.dropDownService.getCargos();
     this.tecnologias = this.dropDownService.getTecnologias();
     this.newsletters = this.dropDownService.getNewsLetter();
@@ -87,7 +93,20 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         )
       )
       .subscribe(dados => (dados ? this.populaDadosForm(dados) : {}));
+
+      this.formulario.get('endereco.estado').valueChanges
+      .pipe(
+        tap(estado => console.log(`Novo estado: ${estado}`)),
+        map(estado => this.estados.filter(e => e.sigla === estado)),
+        map(estados => estados && estados.length > 0 ? estados[0].id : empty()),
+        switchMap((estadoId: number) => this.dropDownService.getCidadesBr(estadoId)),
+        tap(console.log)
+      )
+      .subscribe(cidades => this.cidades = cidades);
+      //this.dropDownService.getCidadesBr(8).subscribe(console.log);
   }
+
+  
 
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
@@ -131,7 +150,6 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   populaDadosForm(dados) {
     this.formulario.patchValue({
       endereco: {
-        cep: dados.cep,
         complemento: dados.complemento,
         rua: dados.logradouro,
         bairro: dados.bairro,
